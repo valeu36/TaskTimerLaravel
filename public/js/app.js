@@ -1870,43 +1870,84 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    this.test();
-    console.log('Component mounted.');
+  data: function data() {
+    return {
+      data: ''
+    };
   },
+  // mounted() {
+  // 	this.test();
+  //     console.log('Component mounted.')
+  // },
   methods: {
-    test: function test() {
-      var _ref, data;
-
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function test$(_context) {
+    // async test() {
+    // 	try {
+    // 	    const {data} = await api.index('/tasks');
+    // 	    console.log(data);
+    //     } catch (e) {
+    // 		console.log(e);
+    //     }
+    // },
+    onSubmit: function onSubmit(data) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function onSubmit$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.prev = 0;
-              console.log('ok');
+              console.log(data);
               _context.next = 4;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(_api__WEBPACK_IMPORTED_MODULE_1__["default"].index('/tasks'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(_api__WEBPACK_IMPORTED_MODULE_1__["default"].store('/tasks', {
+                name: data
+              }));
 
             case 4:
-              _ref = _context.sent;
-              data = _ref.data;
-              console.log(data);
-              _context.next = 12;
+              _context.next = 9;
               break;
 
-            case 9:
-              _context.prev = 9;
+            case 6:
+              _context.prev = 6;
               _context.t0 = _context["catch"](0);
               console.log(_context.t0);
 
-            case 12:
+            case 9:
             case "end":
               return _context.stop();
           }
         }
-      }, null, null, [[0, 9]]);
+      }, null, null, [[0, 6]]);
+    },
+    onGetData: function onGetData() {
+      var _ref, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function onGetData$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(_api__WEBPACK_IMPORTED_MODULE_1__["default"].index('/tasks'));
+
+            case 3:
+              _ref = _context2.sent;
+              data = _ref.data;
+              console.log(data);
+              _context2.next = 11;
+              break;
+
+            case 8:
+              _context2.prev = 8;
+              _context2.t0 = _context2["catch"](0);
+              console.log(_context2.t0);
+
+            case 11:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, null, null, [[0, 8]]);
     }
   }
 });
@@ -3175,32 +3216,63 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.data,
+                expression: "data"
+              }
+            ],
+            attrs: { type: "text", name: "text" },
+            domProps: { value: _vm.data },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.data = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              attrs: { type: "submit" },
+              on: {
+                click: function($event) {
+                  return _vm.onSubmit(_vm.data)
+                }
+              }
+            },
+            [_vm._v("Submit")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card" }, [
+          _c(
+            "button",
+            {
+              on: {
+                click: function($event) {
+                  return _vm.onGetData()
+                }
+              }
+            },
+            [_vm._v("Get data")]
+          )
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 

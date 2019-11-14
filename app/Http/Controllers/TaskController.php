@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -13,8 +15,12 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
-        return response()->json(['message' => 'hi']);
+        $tasks = Task::all();
+
+        foreach ($tasks as $task) {
+            return $task;
+        }
+
     }
 
     /**
@@ -25,7 +31,17 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $task = new Task();
+
+//        $task->start_time = $request->startTime;
+//        $task->end_time = $request->endTime;
+//        $task->user_id = $request->userId;
+//        $task->task_name = $request->name;
+
+        $task->fill($request->all());
+        $task->save();
+
+        return response()->json($request->all());
     }
 
     /**
