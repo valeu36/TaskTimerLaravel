@@ -15,9 +15,22 @@
 </template>
 
 <script>
+    import api from '../api';
     export default {
         mounted() {
+        	this.test();
             console.log('Component mounted.')
+        },
+        methods: {
+        	async test() {
+        		try {
+        			console.log('ok');
+        		    const {data} = await api.index('/tasks');
+        		    console.log(data);
+                } catch (e) {
+        			console.log(e);
+                }
+            }
         }
     }
 </script>
