@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\TaskController;
+use App\Http\Controllers;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +16,8 @@ use App\Http\Controllers\TaskController;
 
 Route::apiResources([
    '/tasks' => 'TaskController'
+]);
+
+Route::apiResources([
+   '/timer_status' => 'TimerStatusController'
 ]);

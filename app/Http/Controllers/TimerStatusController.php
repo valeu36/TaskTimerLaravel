@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Task;
-use Carbon\Carbon;
+use App\TimerStatus;
 use Illuminate\Http\Request;
 
-class TaskController extends Controller
+class TimerStatusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +14,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
+        $timerStatus = TimerStatus::find(1);
 
-        return $tasks;
-
+        return $timerStatus;
     }
 
     /**
@@ -29,15 +27,10 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $task = new Task();
+        $timerStatus = new TimerStatus();
 
-//        $task->start_time = $request->startTime;
-//        $task->end_time = $request->endTime;
-//        $task->user_id = $request->userId;
-//        $task->task_name = $request->name;
-
-        $task->fill($request->all());
-        $task->save();
+        $timerStatus->fill($request->all());
+        $timerStatus->save();
 
         return response()->json($request->all());
     }

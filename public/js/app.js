@@ -1871,11 +1871,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      data: ''
+      taskName: '',
+      userId: 1
     };
   },
   // mounted() {
@@ -1891,16 +1895,18 @@ __webpack_require__.r(__webpack_exports__);
     // 		console.log(e);
     //     }
     // },
-    onSubmit: function onSubmit(data) {
+    onSubmit: function onSubmit() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function onSubmit$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.prev = 0;
-              console.log(data);
+              console.log(this.taskName);
               _context.next = 4;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(_api__WEBPACK_IMPORTED_MODULE_1__["default"].store('/tasks', {
-                name: data
+                start_time: new Date().toISOString().slice(0, 19).replace('T', ' '),
+                user_id: this.userId,
+                task_name: this.taskName
               }));
 
             case 4:
@@ -1917,7 +1923,7 @@ __webpack_require__.r(__webpack_exports__);
               return _context.stop();
           }
         }
-      }, null, null, [[0, 6]]);
+      }, null, this, [[0, 6]]);
     },
     onGetData: function onGetData() {
       var _ref, data;
@@ -1972,26 +1978,6 @@ module.exports = function isBuffer (obj) {
   return obj != null && obj.constructor != null &&
     typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
 }
-
-
-/***/ }),
-
-/***/ "./node_modules/json-to-query-string/index.js":
-/*!****************************************************!*\
-  !*** ./node_modules/json-to-query-string/index.js ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function (json) {
-    let qString = Object.keys(json).map((key) => {
-        return encodeURIComponent(key) + '=' + encodeURIComponent(json[key]);
-    }).join('&');
-    return qString;
-};
 
 
 /***/ }),
@@ -3220,42 +3206,45 @@ var render = function() {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-8" }, [
         _c("div", { staticClass: "card" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.data,
-                expression: "data"
-              }
-            ],
-            attrs: { type: "text", name: "text" },
-            domProps: { value: _vm.data },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c("form", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.taskName,
+                  expression: "taskName"
                 }
-                _vm.data = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              attrs: { type: "submit" },
+              ],
+              attrs: { type: "text" },
+              domProps: { value: _vm.taskName },
               on: {
-                click: function($event) {
-                  return _vm.onSubmit(_vm.data)
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.taskName = $event.target.value
                 }
               }
-            },
-            [_vm._v("Submit")]
-          )
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                attrs: { type: "submit" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.onSubmit($event)
+                  }
+                }
+              },
+              [_vm._v("Submit")]
+            )
+          ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card mt-5" }, [
           _c(
             "button",
             {
@@ -15395,25 +15384,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var json_to_query_string__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! json-to-query-string */ "./node_modules/json-to-query-string/index.js");
-/* harmony import */ var json_to_query_string__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(json_to_query_string__WEBPACK_IMPORTED_MODULE_2__);
 
-
+ // import jsonToQuery from 'json-to-query-string';
 
 var api = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
   baseURL: '/api',
   headers: {
     'Content-Type': 'application/json'
   }
-});
+}); // const get = async (resource, data) => await api.get(`${resource}?${jsonToQuery(data)}`);
+// const post = async (resource, data) => await api.post(resource, data);
 
-var get = function get(resource, data) {
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function get$(_context) {
+var index = function index(resource) {
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function index$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
           _context.next = 2;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(api.get("".concat(resource, "?").concat(json_to_query_string__WEBPACK_IMPORTED_MODULE_2___default()(data))));
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(api.get(resource));
 
         case 2:
           return _context.abrupt("return", _context.sent);
@@ -15426,18 +15414,21 @@ var get = function get(resource, data) {
   });
 };
 
-var post = function post(resource, data) {
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function post$(_context2) {
+var show = function show(resource) {
+  var id,
+      _args2 = arguments;
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function show$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
-          _context2.next = 2;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(api.post(resource, data));
-
-        case 2:
-          return _context2.abrupt("return", _context2.sent);
+          id = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
+          _context2.next = 3;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(api.get("".concat(resource, "/").concat(id)));
 
         case 3:
+          return _context2.abrupt("return", _context2.sent);
+
+        case 4:
         case "end":
           return _context2.stop();
       }
@@ -15445,13 +15436,13 @@ var post = function post(resource, data) {
   });
 };
 
-var index = function index(resource) {
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function index$(_context3) {
+var store = function store(resource, data) {
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function store$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
         case 0:
           _context3.next = 2;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(api.get(resource));
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(api.post(resource, data));
 
         case 2:
           return _context3.abrupt("return", _context3.sent);
@@ -15464,21 +15455,18 @@ var index = function index(resource) {
   });
 };
 
-var show = function show(resource) {
-  var id,
-      _args4 = arguments;
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function show$(_context4) {
+var update = function update(resource, id, data) {
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function update$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
-          id = _args4.length > 1 && _args4[1] !== undefined ? _args4[1] : null;
-          _context4.next = 3;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(api.get("".concat(resource, "/").concat(id)));
+          _context4.next = 2;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(api.put("".concat(resource, "/").concat(id), data));
 
-        case 3:
+        case 2:
           return _context4.abrupt("return", _context4.sent);
 
-        case 4:
+        case 3:
         case "end":
           return _context4.stop();
       }
@@ -15486,13 +15474,13 @@ var show = function show(resource) {
   });
 };
 
-var store = function store(resource, data) {
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function store$(_context5) {
+var destroy = function destroy(resource, id) {
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function destroy$(_context5) {
     while (1) {
       switch (_context5.prev = _context5.next) {
         case 0:
           _context5.next = 2;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(api.post(resource, data));
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(api["delete"]("".concat(resource, "/").concat(id)));
 
         case 2:
           return _context5.abrupt("return", _context5.sent);
@@ -15505,47 +15493,9 @@ var store = function store(resource, data) {
   });
 };
 
-var update = function update(resource, id, data) {
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function update$(_context6) {
-    while (1) {
-      switch (_context6.prev = _context6.next) {
-        case 0:
-          _context6.next = 2;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(api.put("".concat(resource, "/").concat(id), data));
-
-        case 2:
-          return _context6.abrupt("return", _context6.sent);
-
-        case 3:
-        case "end":
-          return _context6.stop();
-      }
-    }
-  });
-};
-
-var destroy = function destroy(resource, id) {
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function destroy$(_context7) {
-    while (1) {
-      switch (_context7.prev = _context7.next) {
-        case 0:
-          _context7.next = 2;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(api["delete"]("".concat(resource, "/").concat(id)));
-
-        case 2:
-          return _context7.abrupt("return", _context7.sent);
-
-        case 3:
-        case "end":
-          return _context7.stop();
-      }
-    }
-  });
-};
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  get: get,
-  post: post,
+  // get,
+  // post,
   index: index,
   show: show,
   store: store,
@@ -15666,8 +15616,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/aleksandr/projects/tasktimerback/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/aleksandr/projects/tasktimerback/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/value/proj/tasktimerback/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/value/proj/tasktimerback/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

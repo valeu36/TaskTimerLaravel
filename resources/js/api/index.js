@@ -1,5 +1,5 @@
 import axios from 'axios';
-import jsonToQuery from 'json-to-query-string';
+// import jsonToQuery from 'json-to-query-string';
 
 const api = axios.create({
     baseURL: '/api',
@@ -8,8 +8,8 @@ const api = axios.create({
     }
 });
 
-const get = async (resource, data) => await api.get(`${resource}?${jsonToQuery(data)}`);
-const post = async (resource, data) => await api.post(resource, data);
+// const get = async (resource, data) => await api.get(`${resource}?${jsonToQuery(data)}`);
+// const post = async (resource, data) => await api.post(resource, data);
 
 const index = async (resource) => await api.get(resource);
 const show = async (resource, id = null) => await api.get(`${resource}/${id}`);
@@ -18,8 +18,8 @@ const update = async (resource, id, data) => await api.put(`${resource}/${id}`, 
 const destroy = async (resource, id) => await api.delete(`${resource}/${id}`);
 
 export default {
-    get,
-    post,
+    // get,
+    // post,
     index,
     show,
     store,

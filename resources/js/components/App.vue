@@ -3,11 +3,13 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <input v-model="data" type="text" name="text">
-                    <button type="submit" @click="onSubmit(data)">Submit</button>
+                    <form>
+                        <input type="text" v-model="taskName">
+                        <button type="submit" @click.prevent="onSubmit">Submit</button>
+                    </form>
                 </div>
 
-                <div class="card">
+                <div class="card mt-5">
                     <button @click="onGetData()">Get data</button>
                 </div>
             </div>
@@ -15,12 +17,14 @@
     </div>
 </template>
 
+
 <script>
     import api from '../api';
     export default {
     	data() {
     		return {
-    			data: '',
+    			taskName: '',
+                userId: 1
             }
         },
         // mounted() {
@@ -36,13 +40,13 @@
         	// 		console.log(e);
             //     }
             // },
-            async onSubmit(data) {
+            async onSubmit() {
         		try {
-        			console.log(data);
+        			console.log(this.taskName);
                     await api.store('/tasks', {
-						start_time: this.startTime,
-					    user_id: 2,
-					    task_name: this.data,
+						start_time: new Date().toISOString().slice(0, 19).replace('T', ' '),
+					    user_id: this.userId,
+					    task_name: this.taskName,
                     });
                 } catch (e) {
                     console.log(e);
