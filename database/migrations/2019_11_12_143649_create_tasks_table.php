@@ -16,20 +16,26 @@ class CreateTasksTable extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->dateTime('start_time');
-            $table->dateTime('end_time')->nullable();
+            $table->dateTime('end_time');
             $table->string('task_name');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
-        });
 
-        Schema::table('tasks', function (Blueprint $table) {
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
-        }
+
+//        Schema::table('tasks', function (Blueprint $table) {
+//            $table->foreign('user_id')
+//                ->references('id')
+//                ->on('users')
+//                ->onUpdate('cascade')
+//                ->onDelete('cascade');
+//        });
+    }
 
     /**
      * Reverse the migrations.

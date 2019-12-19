@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
-use App\TimerStatus;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class TimerStatusController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,17 @@ class TimerStatusController extends Controller
      */
     public function index()
     {
-        $timerStatus = TimerStatus::find(1);
+        //
+    }
 
-        return $timerStatus;
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -27,12 +35,7 @@ class TimerStatusController extends Controller
      */
     public function store(Request $request)
     {
-        $timerStatus = new TimerStatus();
-
-        $timerStatus->fill($request->all());
-        $timerStatus->save();
-
-        return response()->json($request->all());
+        //
     }
 
     /**
@@ -42,6 +45,17 @@ class TimerStatusController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
         //
     }

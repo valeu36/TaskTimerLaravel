@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Task;
 
+use App\Http\Controllers\Controller;
 use App\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -15,10 +17,11 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
+        $userId = Auth::user()->id;
 
-        return $tasks;
+        $tasks = Task::where('user_id', '=', $userId)->get();
 
+        return response()->json($tasks);
     }
 
     /**
@@ -29,17 +32,22 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $task = new Task();
+        $rules = [
+            'start_time' => 'required',
+            'end_time' => 'required',
+            'task_name' => 'required'
+        ];
 
-//        $task->start_time = $request->startTime;
-//        $task->end_time = $request->endTime;
-//        $task->user_id = $request->userId;
-//        $task->task_name = $request->name;
+//        dd($request);
 
-        $task->fill($request->all());
-        $task->save();
+        $this->validate($request, $rules);
 
-        return response()->json($request->all());
+        $task = Task::create([
+           'start_time' => $request->start_time,
+           'end_time' => $request->end_time,
+           'task_name' => $request->task_name,
+           'user_id' => Auth::user()->id,
+        ]);
     }
 
     /**

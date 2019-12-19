@@ -15,18 +15,25 @@ class CreateTimerStatusesTable extends Migration
     {
         Schema::create('timer_statuses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->unique();
             $table->boolean('is_start');
+            $table->dateTime('start_time')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
 
-        Schema::table('timer_statuses', function (Blueprint $table) {
-           $table->foreign('user_id')
-               ->references('id')
-               ->on('users')
-               ->onUpdate('cascade')
-               ->onDelete('cascade');
-        });
+//        Schema::table('timer_statuses', function (Blueprint $table) {
+//           $table->foreign('user_id')
+//               ->references('id')
+//               ->on('users')
+//               ->onUpdate('cascade')
+//               ->onDelete('cascade');
+//        });
     }
 
     /**
