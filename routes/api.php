@@ -35,6 +35,7 @@ Route::group([
         Route::apiResources([
             '/tasks' => 'Task\TaskController'
         ]);
+        Route::get('/total_spent', 'Task\TaskController@timeSpent');
     });
 });
 

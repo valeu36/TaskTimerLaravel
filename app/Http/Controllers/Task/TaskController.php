@@ -21,9 +21,26 @@ class TaskController extends Controller
 
         $tasks = Task::where('user_id', '=', $userId)->get();
 
-        return response()->json($tasks);
-    }
+        $formatedTasks = [];
 
+
+        foreach ($tasks as $task) {
+            $timeSpent = 0;
+
+            $timeSpent += $task->start_time->diffInSeconds($task->end_time);
+
+            $formatedTime['start_time'] = $task->start_time->format('H:i:s');
+            $formatedTime['end_time'] = $task->end_time->format('H:i:s');
+            $formatedTime['task_name'] = $task->task_name;
+            $formatedTime['id'] = $task->id;
+            $formatedTime['time_spent'] = gmdate('H:i:s', $timeSpent);
+
+            array_push($formatedTasks, $formatedTime);
+        }
+
+        return response()->json($formatedTasks);
+
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -82,5 +99,19 @@ class TaskController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function timeSpent() {
+        $userId = Auth::user()->id;
+
+        $tasks = Task::where('user_id', '=', $userId)->get();
+
+        $totalSpent = 0;
+
+        foreach ($tasks as $task) {
+            $totalSpent += $task->start_time->diffInSeconds($task->end_time);
+        }
+
+        return response()->json(gmdate('H:i:s', $totalSpent));
     }
 }
