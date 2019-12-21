@@ -18,23 +18,15 @@ use App\Http\Controllers;
 //   '/timer_status' => 'TimerStatusController'
 //]);
 
-Route::group([
-    'prefix' => 'auth'
-], function () {
+Route::group(['prefix' => 'auth'], function () {
     Route::post('login', 'ApiAuth\AuthController@login');
     Route::post('signup', 'ApiAuth\AuthController@signup');
 
-    Route::group([
-        'middleware' => 'auth:api'
-    ], function() {
+    Route::group(['middleware' => 'auth:api'], function() {
         Route::get('logout', 'ApiAuth\AuthController@logout');
         Route::get('user', 'ApiAuth\AuthController@user');
-        Route::apiResources([
-            '/timer_status' => 'TimerStatus\TimerStatusController'
-        ]);
-        Route::apiResources([
-            '/tasks' => 'Task\TaskController'
-        ]);
+        Route::apiResources(['/timer_status' => 'TimerStatus\TimerStatusController']);
+        Route::apiResources(['/tasks' => 'Task\TaskController']);
         Route::get('/total_spent', 'Task\TaskController@timeSpent');
     });
 });

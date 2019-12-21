@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Task;
 
 use App\Http\Controllers\Controller;
 use App\Task;
+use App\Traits\ApiResponser;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -21,8 +23,7 @@ class TaskController extends Controller
 
         $tasks = Task::where('user_id', '=', $userId)->get();
 
-        $formatedTasks = [];
-
+        $formatedTasks = collect();
 
         foreach ($tasks as $task) {
             $timeSpent = 0;
@@ -35,10 +36,10 @@ class TaskController extends Controller
             $formatedTime['id'] = $task->id;
             $formatedTime['time_spent'] = gmdate('H:i:s', $timeSpent);
 
-            array_push($formatedTasks, $formatedTime);
+            $formatedTasks->push($formatedTime);
         }
 
-        return response()->json($formatedTasks);
+        return $this->showAll($formatedTasks);
 
     }
     /**
@@ -55,8 +56,6 @@ class TaskController extends Controller
             'task_name' => 'required'
         ];
 
-//        dd($request);
-
         $this->validate($request, $rules);
 
         $task = Task::create([
@@ -65,6 +64,8 @@ class TaskController extends Controller
            'task_name' => $request->task_name,
            'user_id' => Auth::user()->id,
         ]);
+
+        return response()->json($task);
     }
 
     /**
