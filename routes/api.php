@@ -20,7 +20,7 @@ use App\Http\Controllers;
 
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', 'ApiAuth\AuthController@login');
-    Route::post('signup', 'ApiAuth\AuthController@signup');
+    Route::post('register', 'ApiAuth\AuthController@register');
 
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('logout', 'ApiAuth\AuthController@logout');
